@@ -1,6 +1,6 @@
 // slices => whatever done in menu components are store in menu Slice
 import { createSlice } from "@reduxjs/toolkit";
-import { MENU_ITEMS } from "@/co nstants";
+import { MENU_ITEMS } from "@/constants";
 
 const initialState = {
   // Pencil and Eraser are active items
