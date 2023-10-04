@@ -1,4 +1,5 @@
 import styles from "./index.module.css";
+import cx from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPencil,
@@ -9,12 +10,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { menuItemClick, actionItemClick } from "@/slice/menuSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { MENU_ITEMS } from "@/constants";
 export default function Menu() {
   const dispatch = useDispatch();
-
+  const activeMenuItem = useSelector((state) => state.menu.activeMenuItem);
   const handleMenuClick = (itemName) => {
     dispatch(menuItemClick(itemName));
   };
@@ -23,13 +24,18 @@ export default function Menu() {
   return (
     <div className={styles.menuContainer}>
       <div
-        className={styles.iconWrapper}
+        // cx is use for apply dynamic css classes , avoid using "",? && conditional statement
+        className={cx(styles.iconWrapper, {
+          [styles.active]: activeMenuItem === MENU_ITEMS.PENCIL,
+        })}
         onClick={() => handleMenuClick(MENU_ITEMS.PENCIL)}
       >
         <FontAwesomeIcon icon={faPencil} className={styles.icon} />
       </div>
       <div
-        className={styles.iconWrapper}
+        className={cx(styles.iconWrapper, {
+          [styles.active]: activeMenuItem === MENU_ITEMS.ERASER,
+        })}
         onClick={() => handleMenuClick(MENU_ITEMS.ERASER)}
       >
         <FontAwesomeIcon icon={faEraser} className={styles.icon} />
