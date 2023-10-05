@@ -20,7 +20,9 @@ export default function Menu() {
     dispatch(menuItemClick(itemName));
   };
 
-  const handleActioItemClick = () => {};
+  const handleActioItemClick = (itemName) => {
+    dispatch(actionItemClick(itemName));
+  };
   return (
     <div className={styles.menuContainer}>
       <div

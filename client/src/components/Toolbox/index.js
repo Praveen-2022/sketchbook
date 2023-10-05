@@ -82,7 +82,7 @@ export default function Toolbox() {
               max={10}
               step={1}
               onChange={updateBrushSize}
-              // value={size}
+              value={size}
             />
           </div>
         </div>
