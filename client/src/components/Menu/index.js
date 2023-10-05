@@ -17,10 +17,15 @@ import { MENU_ITEMS } from "@/constants";
 const Menu = () => {
   const dispatch = useDispatch();
   const activeMenuItem = useSelector((state) => state.menu.activeMenuItem);
- 
+
   const handleMenuClick = (itemName) => {
     dispatch(menuItemClick(itemName));
   };
+
+  const handleActioItemClick = (itemName) => {
+    dispatch(actionItemClick(itemName));
+  };
+
   return (
     <div className={styles.menuContainer}>
       <div
@@ -39,13 +44,22 @@ const Menu = () => {
       >
         <FontAwesomeIcon icon={faEraser} className={styles.icon} />
       </div>
-      <div className={styles.iconWrapper}>
+      <div
+        className={styles.iconWrapper}
+        onClick={() => handleActioItemClick(MENU_ITEMS.UNDO)}
+      >
         <FontAwesomeIcon icon={faRotateLeft} className={styles.icon} />
       </div>
-      <div className={styles.iconWrapper}>
+      <div
+        className={styles.iconWrapper}
+        onClick={() => handleActioItemClick(MENU_ITEMS.UNDO)}
+      >
         <FontAwesomeIcon icon={faRotateRight} className={styles.icon} />
       </div>
-      <div className={styles.iconWrapper}>
+      <div
+        className={styles.iconWrapper}
+        onClick={() => handleActioItemClick(MENU_ITEMS.UNDO)}
+      >
         <FontAwesomeIcon icon={faFileArrowDown} className={styles.icon} />
       </div>
     </div>
@@ -53,4 +67,3 @@ const Menu = () => {
 };
 
 export default Menu;
-
