@@ -2,27 +2,43 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { MENU_ITEMS } from "@/constants";
-import { actionItemClick } from "@/slice/menuSlice";
+import { menuItemClick,actionItemClick } from "@/slice/menuSlice";
 
 export default function Board() {
+  const dispatch =useDispatch();
   const canvasRef = useRef(null);
   const shouldDraw = useRef(false);
-      const activeMenuItem = useSelector((state) => state.menu.activeMenuItem);
-      const { color, size } = useSelector(
-        (state) => state.toolbox[activeMenuItem]
-      );
+  const {activeMenuItem,actionMenuItem} = useSelector((state) => state.menu);
+  const { color, size } = useSelector((state) => state.toolbox[activeMenuItem]);
 
     useEffect(() => {
       if (!canvasRef.current) return;
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
 
-      const changeConfig = () => {
-        context.strokeStyle = color;
-        context.lineWidth = size;
-      };
-      changeConfig();
-    }, [color, size]);
+      if (actionMenuItem === MENU_ITEMS.DOWNLOAD) {
+        const URL = canvas.toDataURL();
+        const anchor = document.createElement("a");
+        anchor.href = URL;
+        anchor.download = "sketch.jpg";
+        anchor.click();
+        console.log(URL);
+      }
+      dispatch(actionItemClick(null));
+      console.log("actionMenuItem", actionMenuItem);
+    }, [actionMenuItem, dispatch]);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+
+    const changeConfig = () => {
+      context.strokeStyle = color;
+      context.lineWidth = size;
+    };
+    changeConfig();
+  }, [color, size]);
 
   // before browser pain
   useLayoutEffect(() => {
