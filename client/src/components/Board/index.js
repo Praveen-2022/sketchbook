@@ -7,20 +7,22 @@ import { actionItemClick } from "@/slice/menuSlice";
 export default function Board() {
   const canvasRef = useRef(null);
   const shouldDraw = useRef(false);
-  const activeMenuItem = useSelector((state) => state.menu.activeMenuItem);
-  const { color, size } = useSelector((state) => state.toolbox[activeMenuItem]);
+      const activeMenuItem = useSelector((state) => state.menu.activeMenuItem);
+      const { color, size } = useSelector(
+        (state) => state.toolbox[activeMenuItem]
+      );
 
-  useEffect(() => {
-    if (!canvasRef.current) return;
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
+    useEffect(() => {
+      if (!canvasRef.current) return;
+      const canvas = canvasRef.current;
+      const context = canvas.getContext("2d");
 
-    const changeConfig = (color, size) => {
-      context.strokeStyle = color;
-      context.lineWidth = size;
-    };
-    changeConfig();
-  }, []);
+      const changeConfig = () => {
+        context.strokeStyle = color;
+        context.lineWidth = size;
+      };
+      changeConfig();
+    }, [color, size]);
 
   // before browser pain
   useLayoutEffect(() => {
@@ -33,7 +35,7 @@ export default function Board() {
 
     /////////////////////////////////////////////////
     const beginPath = (x, y) => {
-      context.beginPath;
+      context.beginPath();
       context.moveTo(x, y);
     };
 
