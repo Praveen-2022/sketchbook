@@ -71,10 +71,10 @@ const Board = () => {
       changeConfig(config.color, config.size);
     };
     changeConfig(color, size);
-    // socket.on("changeConfig", handleChangeConfig);
+    socket.on("changeConfig", handleChangeConfig);
 
     return () => {
-      // socket.off("changeConfig", handleChangeConfig);
+      socket.off("changeConfig", handleChangeConfig);
     };
   }, [color, size]);
 
@@ -99,13 +99,13 @@ const Board = () => {
     const handleMouseDown = (e) => {
       shouldDraw.current = true;
       beginPath(e.clientX, e.clientY);
-      // socket.emit("beginPath", { x: e.clientX, y: e.clientY });
+      socket.emit("beginPath", { x: e.clientX, y: e.clientY });
     };
 
     const handleMouseMove = (e) => {
       if (!shouldDraw.current) return;
       drawLine(e.clientX, e.clientY);
-      // socket.emit("drawLine", { x: e.clientX, y: e.clientY });
+      socket.emit("drawLine", { x: e.clientX, y: e.clientY });
     };
 
     const handleMouseUp = (e) => {
@@ -127,20 +127,22 @@ const Board = () => {
     canvas.addEventListener("mousemove", handleMouseMove);
     canvas.addEventListener("mouseup", handleMouseUp);
 
-    socket.on("connect",()=>{
-      console.log("client connected");
-    })
+    // connection established and check them
 
-    // socket.on("beginPath", handleBeginPath);
-    // socket.on("drawLine", handleDrawLine);
+    // socket.on("connect",()=>{
+    //   console.log("client connected");
+    // })
+
+    socket.on("beginPath", handleBeginPath);
+    socket.on("drawLine", handleDrawLine);
 
     return () => {
       canvas.removeEventListener("mousedown", handleMouseDown);
       canvas.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mouseup", handleMouseUp);
 
-      // socket.off("beginPath", handleBeginPath);
-      // socket.off("drawLine", handleDrawLine);
+      socket.off("beginPath", handleBeginPath);
+      socket.off("drawLine", handleDrawLine);
     };
   }, []);
 
